@@ -1,0 +1,39 @@
+:root {
+    font-family: 'Helvetica', sans-serif;
+    font-synthesis: none;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Remove user-agent default appearance for native form controls. */
+:where(button, input, select, textarea) {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+:where(button, [type='button'], [type='submit'], [type='reset']) {
+    cursor: pointer;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    min-height: 100vh;
+}
