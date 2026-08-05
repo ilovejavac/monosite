@@ -28,6 +28,7 @@ declare global {
   const forwardRef: typeof import('react').forwardRef
   const lazy: typeof import('react').lazy
   const memo: typeof import('react').memo
+  const service: typeof import('./src/shared/lib/service').default
   const startTransition: typeof import('react').startTransition
   const use: typeof import('react').use
   const useActionState: typeof import('react').useActionState
@@ -79,6 +80,9 @@ declare global {
   export type { QueryRequest } from './src/shared/api/request'
   import('./src/shared/api/request')
   // @ts-ignore
-  export type { PageResponse, ServerResponse, ErrorResponse } from './src/shared/api/response'
+  export type { Response, PageResponse, ServerResponse, ErrorResponse } from './src/shared/api/response'
   import('./src/shared/api/response')
+  // @ts-ignore
+  export type { MenuItem } from './src/shared/types/Menu'
+  import('./src/shared/types/Menu')
 }

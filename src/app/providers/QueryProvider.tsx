@@ -1,28 +1,14 @@
-import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
-type ErrorWithTraceId = Error & {
-    traceId?: string
-}
+import {MutationCache, QueryCache, QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 
 const defaultFallback = '请求失败'
 
-function hasTraceId(error: Error): error is ErrorWithTraceId {
-    return 'traceId' in error && typeof (error as ErrorWithTraceId).traceId === 'string'
-}
-
 function apiErrorMessage(error: unknown, fallback = defaultFallback) {
-    const text = error instanceof Error && error.message ? error.message : fallback
-
-    if (error instanceof Error && hasTraceId(error) && error.traceId) {
-        return `${text}（traceId: ${error.traceId}）`
-    }
-
-    return text
+    return error instanceof Error && error.message ? error.message : fallback
 }
 
-export function QueryProvider({ children }: { children: ReactNode }) {
-    const { error } = useMessage()
+export function QueryProvider({children}: Readonly<{ children: ReactNode }>) {
+    const {error} = useMessage()
     const [queryClient] = useState(() => new QueryClient({
         queryCache: new QueryCache({
             onError: (queryError) => {
@@ -36,7 +22,13 @@ export function QueryProvider({ children }: { children: ReactNode }) {
         }),
         defaultOptions: {
             queries: {
-                retry: 2,
+                retry: (failureCount, error) => {
+                    if (error instanceof Error && 'code' in error) {
+                        return false
+                    }
+                    return failureCount < 3
+                },
+                retryDelay: (attemptIndex) => 500 * 2 ** attemptIndex,
                 staleTime: 30_000,
                 refetchOnWindowFocus: true,
                 refetchOnReconnect: true,

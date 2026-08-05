@@ -1,4 +1,4 @@
-type Response = {
+export type Response = {
     readonly code: number,
     readonly message: string,
     readonly timestamp: number,

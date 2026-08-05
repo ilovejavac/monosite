@@ -4,7 +4,7 @@ const MESSAGE_STACK_THRESHOLD = 2
 const MESSAGE_DURATION_SECONDS = 3
 const NOTIFICATION_DURATION_SECONDS = 4.5
 
-export function AntdProvider({ children }: { children: ReactNode }) {
+export function AntdProvider({ children }: Readonly<{ children: ReactNode }>) {
     return (
         <AntdApp
             message={{
